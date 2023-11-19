@@ -82,7 +82,20 @@ docker image build -f Dockerfile-multistage-chainguard-python-latest -t giropops
 ```
 
 ### 1.4 - Verificação de segurança
-A definir
+> [!WARNING]
+> **O que é trivy, docker scout e clear?** São ambas ferramentas de scan de vulnerabilidades em containers
+Segue abaixo a listagem de comandos executados no trivy, docker scout e clear respectivamente:
+```
+trivy image giropops-senhas:1.0
+trivy image giropops-senhas:2.0
+
+docker scout cves giropops-senhas:1.0
+docker scout cves giropops-senhas:2.0
+
+TODO: Adiconar os comandos do clear
+
+```
+
 
 ### 1.5 - Manifestos YAML
 A definir
