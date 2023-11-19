@@ -1,7 +1,43 @@
 # LINUXtips-giropops-senhas
 
-### Objetivo geral
+## Objetivo geral
 Criar e otimizar uma aplicação Kubernetes segura e eficiente, utilizando o projeto giropops-senhas como base. O foco está em práticas de segurança, eficiência de recursos, monitoramento e automação.
+
+## Pré-requisitos
+Para um correto funcionamento é preciso que as ferramentas já tenham sido instaladas
+- **docker**
+```
+apt-get update
+
+apt-get install curl -y
+
+curl -fsSL https://get.docker.com/ | bash
+docker version
+```
+- **docker scout**
+```
+curl -sSfL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh | sh -s --
+docker scout version
+```
+- **trivy**
+```
+curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.47.0
+trivy version
+```
+- **kind**
+```
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-linux-amd64
+chmod +x ./kind
+sudo mv ./kind /usr/local/bin/kind
+kind version
+```
+- **kubernetes(kubectl)**
+```
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+kubectl version --client
+```
 
 ## 1 - Preparação do projeto
 
@@ -44,7 +80,6 @@ O comando abaixo irá gerar uma imagem distroless com multistage build deixando-
 ```
 docker image build -f Dockerfile-multistage-chainguard-python-latest -t giropops-senhas:2.0 .
 ```
-
 
 ### 1.4 - Verificação de segurança
 A definir
