@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt --user
+RUN pip install --no-cache-dir -r requirements.txt --user
 
 
 FROM cgr.dev/chainguard/python:latest
