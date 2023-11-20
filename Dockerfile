@@ -4,12 +4,12 @@ WORKDIR /app
 
 COPY requirements.txt .
 
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt --user
 
 
 FROM cgr.dev/chainguard/python:latest
 
-COPY --from=builder /home/nonroot/.local/lib/python3.11/site-packages /home/nonroot/.local/lib/python3.11/site-packages
+COPY --from=builder /home/nonroot/.local/lib/python3.12/site-packages /home/nonroot/.local/lib/python3.12/site-packages
 
 COPY --from=builder /home/nonroot/.local/bin  /home/nonroot/.local/bin
 
