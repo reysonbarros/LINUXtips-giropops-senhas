@@ -14,11 +14,6 @@ apt-get install curl -y
 curl -fsSL https://get.docker.com/ | bash
 docker version
 ```
-- **docker scout**
-```
-curl -sSfL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh | sh -s --
-docker scout version
-```
 - **trivy**
 ```
 curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.47.0
@@ -31,7 +26,7 @@ chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 kind version
 ```
-- **kubernetes(kubectl)**
+- **kubernetes**
 ```
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 chmod +x ./kubectl
@@ -44,7 +39,7 @@ kubectl version --client
 ### 1.1 - Estruturação do repositório
 TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 - **app.py**: arquivo principal da aplicação python
-- **Dockerfile**: arquivo com as instruções para criação das imagens de container
+- **Dockerfile**: arquivo com as instruções para criação da imagen de container
 - **LICENSE**: termo onde constam os detalhes de como o source code do projeto pode ser manipulado, divulgado e usado por terceiros
 - **README.md**: arquivo contendo detalhes do projeto
 - **requirements.txt**: dependências obrigatórias para o correto funcionamento da aplicação(ex: Flask, Redis e Prometheus) 
@@ -59,13 +54,6 @@ TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 > [!IMPORTANT]
 > **O que é um container?** É um processo isolado do sistema operacional onde utiliza recursos como cgroups, namespaces e chroot para provisionamento de seus processos. Todo container é derivado de uma imagem, ou seja, sua origem tem como base uma imagem.
 
-Executando o comando abaixo construiremos uma imagem do projeto giropops-senhas focando em sua leveza e livre de vulnerabilidades
-```
-docker image build -f Dockerfile-python-3-11-4-alpine3-18 -t giropops-senhas:1.0 .
-```
-TODO: Adicionar print da imagem gerada(docker image ls | grep giropops-senhas:1.0)
-
-
 ### 1.3 - Otimização de imagens
 > [!TIP]
 > **O que é o multistage build?** É uma técnica usada para realizar o build de imagens separados em fases dentro do Dockerfile visando criar imagens menores, otimizadas e sem dependências ou arquivos desnecessários
@@ -76,26 +64,20 @@ TODO: Adicionar print da imagem gerada(docker image ls | grep giropops-senhas:1.
 > [!NOTE]
 > **Chainguard, já ouviu falar?** Empresas como Chainguard e Google se destacam nesse contexto por serem grandes provedores desse modelo(distroless) de imagem de container. Como exemplo, podemos citar o Wolfi OS mantido pela Chainguard que é uma undistro(sem distribuição), ou seja, usa a filosofia distroless com um modelo minimalista projetado para ambientes em containers contendo somente os recursos necessários para seu funcionamento.
 
-O comando abaixo irá gerar uma imagem distroless com multistage build deixando-a mais otimizada, menor que a versão anterior(1.0) e sem vulnerabilidades
+O comando abaixo irá gerar uma imagem distroless com multistage build deixando-a mais otimizada, com um tamanho menor que imagens convencionais e sem vulnerabilidades
 ```
-docker image build -f Dockerfile-multistage-chainguard-python-latest -t giropops-senhas:2.0 .
+docker image build -t giropops-senhas:1.0 .
 ```
+TODO: Adicionar print da imagem gerada(docker image ls | grep giropops-senhas:1.0)
 
 ### 1.4 - Verificação de segurança
 > [!WARNING]
-> **O que é trivy, docker scout e clear?** São ambas ferramentas de scan de vulnerabilidades em containers
-Segue abaixo a listagem de comandos executados no trivy, docker scout e clear respectivamente:
+> **O que é o trivy?** É uma ferramenta para scan de vulnerabilidades em containers.
+Segue abaixo a listagem de comandos executados no trivy:
 ```
 trivy image giropops-senhas:1.0
-trivy image giropops-senhas:2.0
-
-docker scout cves giropops-senhas:1.0
-docker scout cves giropops-senhas:2.0
-
-TODO: Adiconar os comandos do clear
 
 ```
-
 
 ### 1.5 - Manifestos YAML
 A definir
