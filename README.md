@@ -84,7 +84,14 @@ trivy image giropops-senhas:1.0
 
 
 ### 1.5 - Manifestos YAML
-A definir
+> [!IMPORTANT]
+> **O que é um Pod?** Agrupamento com 1 ou mais containers compartilhando o mesmo namespace
+
+> [!IMPORTANT]
+> **O que é um Deployment?** É um objeto no Kubernetes que permite gerenciar um conjunto de Pods identificados por uma label
+
+> [!IMPORTANT]
+> **O que é um Service?** Um objeto que permite expor uma aplicação para o mundo externo
 
 ### 1.6 - Práticas recomendadas
 A definir
