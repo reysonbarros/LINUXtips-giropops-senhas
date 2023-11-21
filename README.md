@@ -75,7 +75,7 @@ docker image ls | grep giropops-senhas
 ### 1.4 - Verificação de segurança
 > [!WARNING]
 > **O que é o trivy?** É uma ferramenta para scan de vulnerabilidades em containers.
-Segue abaixo a listagem de comandos executados no trivy:
+Comando executado no trivy para realizar a análise de vulnerabilidades em uma imagem:
 ```
 trivy image giropops-senhas:1.0
 
