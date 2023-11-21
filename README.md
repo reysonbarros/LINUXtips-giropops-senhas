@@ -67,8 +67,10 @@ TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 O comando abaixo irá gerar uma imagem distroless com multistage build deixando-a mais otimizada, com um tamanho menor que imagens convencionais e sem vulnerabilidades
 ```
 docker image build -t giropops-senhas:1.0 .
+docker image ls | grep giropops-senhas
 ```
-TODO: Adicionar print da imagem gerada(docker image ls | grep giropops-senhas:1.0)
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/0672ba14-0343-452c-91af-ffadbb82c6e7)
+
 
 ### 1.4 - Verificação de segurança
 > [!WARNING]
