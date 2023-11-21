@@ -80,6 +80,8 @@ Comando executado no trivy para realizar a análise de vulnerabilidades em uma i
 trivy image giropops-senhas:1.0
 
 ```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/783e7af7-c06d-4fd5-8996-d7263119845b)
+
 
 ### 1.5 - Manifestos YAML
 A definir
