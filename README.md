@@ -67,10 +67,11 @@ TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 
 O comando abaixo irá gerar uma imagem distroless com multistage build deixando-a mais otimizada, com um tamanho menor que imagens convencionais e sem vulnerabilidades
 ```
-docker image build -t giropops-senhas:1.0 .
-docker image ls | grep giropops-senhas
+docker image build -t reysonbarros/giropops-senhas:1.0 .
+docker image ls | grep reysonbarros/giropops-senhas
 ```
-![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/0672ba14-0343-452c-91af-ffadbb82c6e7)
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/99c65fdc-a273-4677-a0d9-504b1879ed03)
+
 
 
 ### 1.4 - Verificação de segurança
@@ -78,7 +79,7 @@ docker image ls | grep giropops-senhas
 > **O que é o trivy?** É uma ferramenta para scan de vulnerabilidades em containers.
 Comando executado no trivy para realizar a análise de vulnerabilidades em uma imagem:
 ```
-trivy image giropops-senhas:1.0
+trivy image reysonbarros/giropops-senhas:1.0
 
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/783e7af7-c06d-4fd5-8996-d7263119845b)
