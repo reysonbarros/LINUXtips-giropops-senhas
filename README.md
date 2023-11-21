@@ -46,6 +46,7 @@ TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 - **static**: pasta com os arquivos estáticos do projeto(ex: css, js e imagens)
 - **templates**: pasta com os arquivos de layout/frontend(ex: html)
 - **tailwind.config.js**: arquivo para exportação de módulos(ex: temas, plugins)
+- **k8s**: pasta contendo os manifestos yaml(cluster, deployments e services)
 
 ### 1.2 - Construção das imagens
 > [!IMPORTANT]
