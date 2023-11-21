@@ -1,0 +1,34 @@
+apiVersion: apps/v1 # versao da API do Kubernetes
+kind: Deployment # tipo do objeto a ser criado
+metadata: 
+  name: giropops-senhas-deployment
+  labels:
+    app: giropops-senhas-deployment
+spec:
+  replicas: 3
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 2
+  selector:
+    matchLabels:
+      app: giropops-senhas-deployment
+  template:
+    metadata:
+      labels:
+        app: giropops-senhas-deployment
+    spec:
+      containers:
+      - name: giropops-senhas
+        image: reysonbarros/giropops-senhas:1.0
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: 0.5      
+            memory: 128Mi
+          limits:   
+            cpu: 0.8
+            memory: 256Mi
+
