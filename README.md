@@ -86,6 +86,14 @@ trivy image giropops-senhas:1.0
 
 ### 1.5 - Manifestos YAML
 > [!IMPORTANT]
+> **O que é um cluster?** Conjunto de 1 ou mais nodes dentro de uma rede
+
+Criação do cluster
+```
+kind create cluster --config cluster.yaml
+```
+
+> [!IMPORTANT]
 > **O que é um Pod?** Agrupamento com 1 ou mais containers compartilhando o mesmo namespace
 
 > [!IMPORTANT]
