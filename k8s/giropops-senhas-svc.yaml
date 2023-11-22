@@ -1,0 +1,17 @@
+apiVersion: v1 # versao da API do Kubernetes
+kind: Service # tipo de objeto criado, nesse caso, um Service
+metadata: # metadados do objeto
+  name: giropops-senhas-nodeport # nome do Service
+  labels: # definicao de labels do Service
+    app: giropops-senhas # label app com valor nginx
+    env: dev # label env com valor dev
+spec: # especificacao do servico
+  selector: # definicao do selector referente ao pods para esse Service
+    app: giropops-senhas-deployment # pods com label app serao expostos por esse Service
+  ports: # definicao das portas do Service
+  - port: 5000 # service na porta 80
+    protocol: TCP # protocolo de comunicacao TCP(Transmission Control Protocol)
+    name: http # descricao para a porta
+    targetPort: 5000 # porta do container
+    nodePort: 32000 # range do nodePort 30000-32767. Porta que o node vai receber as requests e realizar o bind com o Service
+  type: NodePort # tipo de servico externo, ou seja, acessível também de fora do cluster

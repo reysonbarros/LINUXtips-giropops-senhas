@@ -22,6 +22,9 @@ spec:
       containers:
       - name: giropops-senhas
         image: reysonbarros/giropops-senhas:1.0
+        env:
+        - name: REDIS_HOST
+          value: "redis-service"
         ports:
         - containerPort: 5000
         resources:
