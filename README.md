@@ -90,11 +90,6 @@ trivy image reysonbarros/giropops-senhas:1.0
 > [!IMPORTANT]
 > **O que é um cluster?** Conjunto de 1 ou mais nodes dentro de uma rede
 
-Criação do cluster
-```
-kind create cluster --config cluster.yaml
-```
-
 > [!IMPORTANT]
 > **O que é um Pod?** Agrupamento com 1 ou mais containers compartilhando o mesmo namespace
 
@@ -103,6 +98,33 @@ kind create cluster --config cluster.yaml
 
 > [!IMPORTANT]
 > **O que é um Service?** Um objeto que permite expor uma aplicação para o mundo externo
+
+> [!IMPORTANT]
+> **O que é um StatefulSet?** São objetos que servem para que possa criar aplicações que precisam manter a identidade do Pod e persistir dados em volumes locais
+
+Criação do cluster
+```
+kind create cluster --config cluster.yaml
+```
+Criação do ConfigMap
+```
+kubectl apply -f redis-configmap.yaml
+```
+Criação do StatefulSet
+```
+kubectl apply -f redis-statefulset.yaml
+```
+Criação do Service
+```
+kubectl apply -f redis-headless-svc.yaml
+```
+
+Teste interno de comunicação  com o servico do redis
+```
+kubectl run -it --rm debug --image busybox --restart Never -- telnet redis-0.redis.default.svc.cluster.local:6379
+AUTH "123456789@"
+ping
+```
 
 ### 1.6 - Práticas recomendadas
 A definir
