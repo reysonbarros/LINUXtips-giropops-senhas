@@ -138,6 +138,19 @@ kubectl get services
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/731d8a2d-87bb-4488-ae04-1a83f869d031)
 
+Listagem do Persistent Volume Claim
+```
+kubectl get pvc
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/8caf66b1-db5d-427e-8290-66e9d2695231)
+
+
+Listagem do Persistent Volume
+```
+kubectl get pv
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/4763f172-1d33-4f2d-8e83-c387cd8f9981)
+
 
 Teste interno(dentro do cluster) de comunicação entre os pods do giropops-senhas e redis
 ```
