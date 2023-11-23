@@ -102,28 +102,41 @@ trivy image reysonbarros/giropops-senhas:1.0
 > [!IMPORTANT]
 > **O que é um StatefulSet?** São objetos que servem para que possa criar aplicações que precisam manter a identidade do Pod e persistir dados em volumes locais
 
-Criação do cluster
+Criação do Cluster giropops com 1 node control-plane e 3 nodes workers
 ```
 kind create cluster --config cluster.yaml
 ```
-Criação do ConfigMap
+Criação do ConfigMap para o redis
 ```
 kubectl apply -f redis-configmap.yaml
 ```
-Criação do StatefulSet
+Criação do StatefulSet para o redis
 ```
 kubectl apply -f redis-statefulset.yaml
 ```
-Criação do Service
+Criação do Service para o redis
 ```
 kubectl apply -f redis-headless-svc.yaml
 ```
-
-Teste interno de comunicação  com o servico do redis
+Criação do Deployment para a aplicação giropops-senhas
 ```
-kubectl run -it --rm debug --image busybox --restart Never -- telnet redis-0.redis.default.svc.cluster.local:6379
-AUTH "123456789@"
-ping
+k apply -f giropops-senhas-deployment.yaml
+```
+Criação do Service para a aplicação giropops-senhas
+```
+k apply -f giropops-senhas-svc.yaml
+```
+Teste interno(dentro do cluster) de comunicação entre os pods do giropops-senhas e redis
+```
+k exec -it giropops-senhas-954766894-cfm6v -- python
+>>> import redis
+>>> import os
+>>> redis_host = os.environ.get('REDIS_HOST')
+>>> redis_password = os.environ.get('REDIS_PASSWORD')
+>>> redis_port = 6379
+>>> r = redis.StrictRedis(host=redis_host, port=redis_port, password=redis_password, decode_responses=True)
+>>> r.ping()
+>>> print('connected to redis "{}"'.format(redis_host))
 ```
 
 ### 1.6 - Práticas recomendadas
