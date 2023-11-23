@@ -104,27 +104,27 @@ trivy image reysonbarros/giropops-senhas:1.0
 
 Criação do Cluster giropops com 1 node control-plane e 3 nodes workers
 ```
-kind create cluster --config cluster.yaml
+kind create cluster --config k8s/cluster.yaml
 ```
 Criação do ConfigMap para o redis
 ```
-kubectl apply -f redis-configmap.yaml
+kubectl apply -f k8s/redis-configmap.yaml
 ```
 Criação do StatefulSet para o redis
 ```
-kubectl apply -f redis-statefulset.yaml
+kubectl apply -f k8s/redis-statefulset.yaml
 ```
 Criação do Service para o redis
 ```
-kubectl apply -f redis-headless-svc.yaml
+kubectl apply -f k8s/redis-headless-svc.yaml
 ```
 Criação do Deployment para a aplicação giropops-senhas
 ```
-k apply -f giropops-senhas-deployment.yaml
+k apply -f k8s/giropops-senhas-deployment.yaml
 ```
 Criação do Service para a aplicação giropops-senhas
 ```
-k apply -f giropops-senhas-svc.yaml
+k apply -f k8s/giropops-senhas-svc.yaml
 ```
 Teste interno(dentro do cluster) de comunicação entre os pods do giropops-senhas e redis
 ```
