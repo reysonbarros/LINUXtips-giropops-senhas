@@ -120,12 +120,25 @@ kubectl apply -f k8s/redis-headless-svc.yaml
 ```
 Criação do Deployment para a aplicação giropops-senhas
 ```
-k apply -f k8s/giropops-senhas-deployment.yaml
+kubectl apply -f k8s/giropops-senhas-deployment.yaml
 ```
 Criação do Service para a aplicação giropops-senhas
 ```
-k apply -f k8s/giropops-senhas-svc.yaml
+kubectl apply -f k8s/giropops-senhas-svc.yaml
 ```
+Listagem dos Pods
+```
+kubectl get pods
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/e3b01f17-a0bb-45b2-94c6-2b74f5f5dd40)
+
+Listagem dos Services
+```
+kubectl get services
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/731d8a2d-87bb-4488-ae04-1a83f869d031)
+
+
 Teste interno(dentro do cluster) de comunicação entre os pods do giropops-senhas e redis
 ```
 k exec -it giropops-senhas-954766894-cfm6v -- python
