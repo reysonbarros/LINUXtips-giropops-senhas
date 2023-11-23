@@ -1,9 +1,9 @@
 apiVersion: apps/v1 # versao da API do Kubernetes
 kind: Deployment # tipo do objeto a ser criado
 metadata: 
-  name: giropops-senhas-deployment
+  name: giropops-senhas
   labels:
-    app: giropops-senhas-deployment
+    app: giropops-senhas
 spec:
   replicas: 3
   strategy: 
@@ -13,18 +13,20 @@ spec:
       maxUnavailable: 2
   selector:
     matchLabels:
-      app: giropops-senhas-deployment
+      app: giropops-senhas
   template:
     metadata:
       labels:
-        app: giropops-senhas-deployment
+        app: giropops-senhas
     spec:
       containers:
       - name: giropops-senhas
         image: reysonbarros/giropops-senhas:1.0
         env:
         - name: REDIS_HOST
-          value: "redis-service"
+          value: "redis-0.redis.default.svc.cluster.local"
+        - name: REDIS_PASSWORD
+          value: "123456789@"  
         ports:
         - containerPort: 5000
         resources:
