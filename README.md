@@ -164,9 +164,32 @@ k exec -it giropops-senhas-954766894-cfm6v -- python
 >>> r.ping()
 >>> print('connected to redis "{}"'.format(redis_host))
 ```
+Testando a aplicação via browser
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/acb5e385-eb2b-498a-9e7e-9ac8b2118c33)
+
+> [!NOTE]
+> Para acessar a aplicação utilizar um dos IPs da coluna INTERNAL-IP dos nodes(k get nodes -o wide) e a porta mapeada para os nodes no serviço giropops-senhas(k get svc)
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/fa52858f-2ca6-41d0-99f3-b06fd81979e3)
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/e5544568-ab5c-494e-9bae-7a2828e673f1)
+
 
 ### 1.6 - Práticas recomendadas
-A definir
+> [!IMPORTANT]
+> **O que são probes?** Probe significa sondar, examinar algo. As probes são uma forma de você monitorar o seu Pod e saber se ele está em um estado saudável ou não
+
+> [!IMPORTANT]
+> **O que é uma livenessProbe?** A livenessProbe é a nossa probe de verificação de integridade, o que ela faz é verificar se o que está rodando dentro do Pod está saudável. O que fazemos é criar uma forma de testar se o que temos dentro do Pod está respondendo conforme esperado. Se por acaso o teste falhar, o Pod será reiniciado
+
+> [!IMPORTANT]
+> **O que é uma readinessProbe?** A readinessProbe é uma forma de o Kubernetes verificar se o seu container está pronto para receber tráfego, se ele está pronto para receber requisições externas
+
+> [!IMPORTANT]
+> **O que é uma startupProbe?** A startupProbe é uma forma de o Kubernetes verificar se o seu container está pronto para receber tráfego, se ele está pronto para receber requisições externas
+
+> [!IMPORTANT]
+> **O que é são limites de recursos no K8S?** Limitação de recursos é uma forma de garantirmos os limites máximo e mínimo de cpu e memória que um container deve utilizar em seu ciclo de vida
+
+Nesse projeto, as probes e limites de recursos foram implementados no deployment do giropops-senhas e no statefulset do redis seguindo as boas práticas de monitoramento, estabilidade e eficiência
 
 ### 1.7 - Linting de YAML
 A definir
