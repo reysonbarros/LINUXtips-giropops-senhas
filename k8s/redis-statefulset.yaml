@@ -51,11 +51,6 @@ spec: # especificacao do objeto StatefulSet
         ports: # definicao de portas
         - containerPort: 6379 # porta escutada pelo container
           name: redis
-        volumeMounts:
-        - name: www
-          mountPath: /data
-        - name: redis-config
-          mountPath: /etc/redis/
         resources: # definicao de recursos como cpu e memoria para o pod
           requests: # recursos mínimos reservados de cpu e memoria reservado ao pod
             cpu: 0.5       
@@ -63,6 +58,33 @@ spec: # especificacao do objeto StatefulSet
           limits: # recursos máximos de cpu e memoria que o pod deve usar 
             cpu: 0.8
             memory: 256Mi
+        # Readiness e liveness probes podem ser usados em paralelo para o mesmo container. Usar ambos pode assegurar que a request(tráfego) não chegue em um container que não está pronto para isso, e que os containers são reiniciados quando falham
+        readinessProbe: # pod(container) está vivo e pronto para receber conexões(requests) externas?
+          exec:
+            command: # comando a ser executado
+            - sh
+            - -c
+            - "redis-cli -h $(hostname) ping"
+          initialDelaySeconds: 15 # O tempo que iremos esperar para executar a primeira vez a probe
+          timeoutSeconds: 5 # De quanto em quanto tempo iremos executar a probe
+          successThreshold: 1 # O número de vezes que a probe precisa passar para considerar que o container está pronto
+          failureThreshold: 3 # O número de vezes que a probe precisa falhar para considerar que o container não está pronto   
+        livenessProbe: # pod(container) está vivo?
+          exec:
+            command: # comando a ser executado
+            - sh
+            - -c
+            - "redis-cli -h $(hostname) ping"
+          initialDelaySeconds: 20 # # O tempo que iremos esperar para executar a primeira vez a probe
+          periodSeconds: 3 # De quanto em quanto tempo iremos executar a probe
+          successThreshold: 1 # O número de vezes que a probe precisa passar para considerar que o container está pronto
+          failureThreshold: 3 # O número de vezes que a probe precisa falhar para considerar que o container não está pronto
+        volumeMounts:
+        - name: www
+          mountPath: /data
+        - name: redis-config
+          mountPath: /etc/redis/
+        resources: # definicao de recursos como cpu e memoria para o pod
       volumes:
       - name: redis-config
         emptyDir: {}
