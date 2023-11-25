@@ -8,9 +8,7 @@ Para um correto funcionamento é preciso que as ferramentas já tenham sido inst
 - **docker**
 ```
 apt-get update
-
 apt-get install curl -y
-
 curl -fsSL https://get.docker.com/ | bash
 docker version
 ```
@@ -33,6 +31,32 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 kubectl version --client
 ```
+- **go**
+```
+sudo su
+wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
+echo export PATH=$PATH:/usr/local/go/bin >> $HOME/.bashrc
+go version
+```
+- **kube-linter**
+```
+sudo su
+go install golang.stackrox.io/kube-linter/cmd/kube-linter
+cd go/bin
+mv kube-linter /usr/local/go/bin/
+cd ..
+cd go/pkg
+mv -r mod sumdb /usr/local/go/pkg/
+kube-linter version
+```
+- **yamllint**
+```
+sudo apt-get install yamllint -y
+yamllint --version
+```
+
+
 
 ## 1 - Preparação do projeto
 
@@ -192,7 +216,16 @@ Testando a aplicação via browser
 Nesse projeto, as probes e limites de recursos foram implementados no deployment do giropops-senhas e no statefulset do redis seguindo as boas práticas de monitoramento, estabilidade e eficiência
 
 ### 1.7 - Linting de YAML
-A definir
+> [!IMPORTANT]
+> **O que é linter?** Lint ou linter é uma ferramenta que realiza uma varredura sobre codigo estático na tentativa de identificar possíveis bugs e falhas/erros de programação. Um linter é responsável por capturar erros nos dados antes que sejam processados. Dessa forma, isso economiza tempo em análises de erros durante operações de alta robustez e criticidade
+
+> [!IMPORTANT]
+> **O que é o kube-linter?** KubeLinter analisa arquivos YAML do Kubernetes e Helm charts para validar se está correspondendo com as melhores práticas com foco na segurança
+
+> [!IMPORTANT]
+> **O que é o yamllint?** yamllint não verifica somente a validade de sintaxe, mas também analisa outros aspectos de código, como por exemplo espaços em branco e identação
+
+
 
 
 
