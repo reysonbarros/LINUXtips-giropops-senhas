@@ -217,7 +217,7 @@ Nesse projeto, as probes e limites de recursos foram implementados no deployment
 
 ### 1.7 - Linting de YAML
 > [!IMPORTANT]
-> **O que é linter?** Lint ou linter é uma ferramenta que realiza uma varredura sobre codigo estático na tentativa de identificar possíveis bugs e falhas/erros de programação. Um linter é responsável por capturar erros nos dados antes que sejam processados. Dessa forma, isso economiza tempo em análises de erros durante operações de alta robustez e criticidade
+> **O que é linter?** Lint ou linter é uma ferramenta que realiza uma varredura sobre código estático na tentativa de identificar possíveis bugs e falhas/erros de programação. Um linter é responsável por capturar erros nos dados antes que sejam processados. Dessa forma, isso economiza tempo em análises de erros durante operações de alta robustez e criticidade
 
 > [!IMPORTANT]
 > **O que é o kube-linter?** KubeLinter analisa arquivos YAML do Kubernetes e Helm charts para validar se está correspondendo com as melhores práticas com foco na segurança
@@ -225,8 +225,16 @@ Nesse projeto, as probes e limites de recursos foram implementados no deployment
 > [!IMPORTANT]
 > **O que é o yamllint?** yamllint não verifica somente a validade de sintaxe, mas também analisa outros aspectos de código, como por exemplo espaços em branco e identação
 
+Exemplo de análise com yamllint
+```
+yamllint k8s/cluster.yaml
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/b42997b7-403b-42a6-b020-779f6918a5b3)
 
-
-
+Exemplo de análise com kube-linter
+```
+kube-linter lint k8s/giropops-senhas-deployment.yaml
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/22199ab2-d8b3-4b3a-987e-6189e0faaf10)
 
 
