@@ -237,4 +237,5 @@ kube-linter lint k8s/giropops-senhas-deployment.yaml
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/22199ab2-d8b3-4b3a-987e-6189e0faaf10)
 
-
+### Referências
+https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-affinity
