@@ -239,3 +239,4 @@ kube-linter lint k8s/giropops-senhas-deployment.yaml
 
 ### Referências
 https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-affinity
+https://github.com/kubernetes-sigs/kind/releases
