@@ -1,8 +1,34 @@
+---
+# yamllint disable rule:line-length
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 name: giropops
 nodes:
   - role: control-plane
+    image: kindest/node:v1.28.0@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
   - role: worker
+    image: kindest/node:v1.28.0@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:  # Sao Paulo - Brasil(America do Sul)
+            node-labels: "topology.kubernetes.io/zone=sa-east-1a,topology.kubernetes.io/region=sa-east-1"
   - role: worker
+    # yamllint disable-line rule:line-length
+    image: kindest/node:v1.28.0@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:  # Virginia - Estados Unidos(America do Norte)
+            node-labels: "topology.kubernetes.io/zone=us-east-1a,topology.kubernetes.io/region=us-east-1"
   - role: worker
+    # yamllint disable-line rule:line-length
+    image: kindest/node:v1.28.0@sha256:b7a4cad12c197af3ba43202d3efe03246b3f0793f162afb40a33c923952d5b31
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:  # Frankfurt - Alemanha(Europa)
+            node-labels: "topology.kubernetes.io/zone=eu-central-1a,topology.kubernetes.io/region=eu-central-1"
