@@ -5,33 +5,33 @@ Criar e otimizar uma aplicação Kubernetes segura e eficiente, utilizando o pro
 
 ## Pré-requisitos
 Para um correto funcionamento é preciso que as ferramentas já tenham sido instaladas
-- **docker**
+- **docker version 24.0.6+(Client e Server)**
 ```
 apt-get update
 apt-get install curl -y
 curl -fsSL https://get.docker.com/ | bash
 docker version
 ```
-- **trivy**
+- **trivy version 0.47.0+**
 ```
 curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.47.0
 trivy version
 ```
-- **kind**
+- **kind version 0.20.0+**
 ```
-curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.14.0/kind-linux-amd64
+curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.20.0/kind-$(uname)-amd64
 chmod +x ./kind
 sudo mv ./kind /usr/local/bin/kind
 kind version
 ```
-- **kubernetes**
+- **kubernetes version 1.28.2+**
 ```
 curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
 chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 kubectl version --client
 ```
-- **go**
+- **go 1.21.4+**
 ```
 sudo su
 wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
@@ -39,7 +39,7 @@ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
 echo export PATH=$PATH:/usr/local/go/bin >> $HOME/.bashrc
 go version
 ```
-- **kube-linter**
+- **kube-linter version development**
 ```
 sudo su
 go install golang.stackrox.io/kube-linter/cmd/kube-linter
@@ -50,7 +50,7 @@ cd go/pkg
 mv -r mod sumdb /usr/local/go/pkg/
 kube-linter version
 ```
-- **yamllint**
+- **yamllint version 1.20.0+**
 ```
 sudo apt-get install yamllint -y
 yamllint --version
