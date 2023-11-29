@@ -126,39 +126,47 @@ trivy image reysonbarros/giropops-senhas:1.0
 > [!IMPORTANT]
 > **O que é um StatefulSet?** São objetos que servem para que possa criar aplicações que precisam manter a identidade do Pod e persistir dados em volumes locais
 
+> [!IMPORTANT]
+> Acessar a pasta k8s para executar os próximos comandos
+cd k8s/
+
 Criação do Cluster giropops com 1 node control-plane e 3 nodes workers
 ```
-kind create cluster --config k8s/cluster.yaml
+kind create cluster --config cluster.yaml
+```
+Criação do Namespace dev
+```
+kubectl apply -f dev-namespace.yaml
 ```
 Criação do ConfigMap para o redis
 ```
-kubectl apply -f k8s/redis-configmap.yaml
+kubectl apply -f redis-configmap.yaml -n dev
 ```
 Criação do StatefulSet para o redis
 ```
-kubectl apply -f k8s/redis-statefulset.yaml
+kubectl apply -f redis-statefulset.yaml -n dev
 ```
 Criação do Service para o redis
 ```
-kubectl apply -f k8s/redis-headless-svc.yaml
+kubectl apply -f redis-headless-svc.yaml -n dev
 ```
 Criação do Deployment para a aplicação giropops-senhas
 ```
-kubectl apply -f k8s/giropops-senhas-deployment.yaml
+kubectl apply -f giropops-senhas-deployment.yaml -n dev
 ```
 Criação do Service para a aplicação giropops-senhas
 ```
-kubectl apply -f k8s/giropops-senhas-svc.yaml
+kubectl apply -f giropops-senhas-svc.yaml -n dev
 ```
 Listagem dos Pods
 ```
-kubectl get pods
+kubectl get pods -n dev
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/e3b01f17-a0bb-45b2-94c6-2b74f5f5dd40)
 
 Listagem dos Services
 ```
-kubectl get services
+kubectl get services -n dev
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/731d8a2d-87bb-4488-ae04-1a83f869d031)
 
