@@ -251,5 +251,3 @@ https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-aff
 https://github.com/kubernetes-sigs/kind/releases
 
 https://medium.com/@pushkarjoshi0410/assigning-pods-to-nodes-using-affinity-and-anti-affinity-df18377244b9
-
-https://github.com/kubernetes-sigs/kind/releases
