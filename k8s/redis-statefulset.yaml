@@ -1,102 +1,103 @@
-apiVersion: apps/v1 # versao da API do Kubernetes
-kind: StatefulSet # tipo do objeto a ser criado, no caso um StatefulSet
-metadata: # definicao de metadados para o recurso StatefulSet
-  name: redis # nome do objeto StatefulSet
-spec: # especificacao do objeto StatefulSet
-  serviceName: redis # nome do servico vinculado ao StatefulSet
-  replicas: 1 # quantidade de replicas do pod
-  selector: # definicao do seletor
-    matchLabels: # criterio da label para identificar os pods
-      app: redis # nome da label a ser procurada nos pods
-  template: # definicao dos pods
-    metadata: # definicao de metadados para os pods
-      labels: # definicao de labels para os pods
-        app: redis # nome e valor da label dos pods
-    spec: # especificacao dos containers
+---
+# yamllint disable rule:line-length
+# yamllint disable rule:trailing-spaces
+apiVersion: apps/v1  # versao da API do Kubernetes
+kind: StatefulSet  # tipo do objeto a ser criado, no caso um StatefulSet
+metadata:  # definicao de metadados para o recurso StatefulSet
+  name: redis  # nome do objeto StatefulSet
+spec:  # especificacao do objeto StatefulSet
+  serviceName: redis  # nome do servico vinculado ao StatefulSet
+  replicas: 1  # quantidade de replicas do pod
+  selector:  # definicao do seletor
+    matchLabels:  # criterio da label para identificar os pods
+      app: redis  # nome da label a ser procurada nos pods
+  template:  # definicao dos pods
+    metadata:  # definicao de metadados para os pods
+      labels:  # definicao de labels para os pods
+        app: redis  # nome e valor da label dos pods
+    spec:  # especificacao dos containers
       initContainers:
-      - name: config
-        image: cgr.dev/chainguard/redis
-        command: [ "sh", "-c" ]
-        args:
-          - |
-            cp /tmp/redis/redis.conf /etc/redis/redis.conf
-            
-            echo "finding master..."
-            MASTER_FDQN=`hostname  -f | sed -e 's/redis-[0-9]\./redis-0./'`
-            if [ "$(redis-cli -h sentinel -p 5000 ping)" != "PONG" ]; then
-              echo "master not found, defaulting to redis-0"
-
-              if [ "$(hostname)" == "redis-0" ]; then
-                echo "this is redis-0, not updating config..."
-              else
-                echo "updating redis.conf..."
-                echo "slaveof $MASTER_FDQN 6379" >> /etc/redis/redis.conf
-              fi
-            else
-              echo "sentinel found, finding master"
-              MASTER="$(redis-cli -h sentinel -p 5000 sentinel get-master-addr-by-name mymaster | grep -E '(^redis-\d{1,})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})')"
-              echo "master found : $MASTER, updating redis.conf"
-              echo "slaveof $MASTER 6379" >> /etc/redis/redis.conf
-            fi
-        volumeMounts:
-        - name: redis-config
-          mountPath: /etc/redis/
         - name: config
-          mountPath: /tmp/redis/
-      containers: # definicao dos containers
-      - name: redis # nome do container
-        image: cgr.dev/chainguard/redis # imagem do container
-        command: ["redis-server"] # comando executado no container
-        args: ["/etc/redis/redis.conf"]
-        ports: # definicao de portas
-        - containerPort: 6379 # porta escutada pelo container
-          name: redis
-        resources: # definicao de recursos como cpu e memoria para o pod
-          requests: # recursos mínimos reservados de cpu e memoria reservado ao pod
-            cpu: 0.5       
-            memory: 128Mi
-          limits: # recursos máximos de cpu e memoria que o pod deve usar 
-            cpu: 0.8
-            memory: 256Mi
-        # Readiness e liveness probes podem ser usados em paralelo para o mesmo container. Usar ambos pode assegurar que a request(tráfego) não chegue em um container que não está pronto para isso, e que os containers são reiniciados quando falham
-        readinessProbe: # pod(container) está vivo e pronto para receber conexões(requests) externas?
-          exec:
-            command: # comando a ser executado
-            - sh
-            - -c
-            - "redis-cli -h $(hostname) ping"
-          initialDelaySeconds: 15 # O tempo que iremos esperar para executar a primeira vez a probe
-          timeoutSeconds: 5 # De quanto em quanto tempo iremos executar a probe
-          successThreshold: 1 # O número de vezes que a probe precisa passar para considerar que o container está pronto
-          failureThreshold: 3 # O número de vezes que a probe precisa falhar para considerar que o container não está pronto   
-        livenessProbe: # pod(container) está vivo?
-          exec:
-            command: # comando a ser executado
-            - sh
-            - -c
-            - "redis-cli -h $(hostname) ping"
-          initialDelaySeconds: 20 # # O tempo que iremos esperar para executar a primeira vez a probe
-          periodSeconds: 3 # De quanto em quanto tempo iremos executar a probe
-          successThreshold: 1 # O número de vezes que a probe precisa passar para considerar que o container está pronto
-          failureThreshold: 3 # O número de vezes que a probe precisa falhar para considerar que o container não está pronto
-        volumeMounts:
-        - name: www
-          mountPath: /data
-        - name: redis-config
-          mountPath: /etc/redis/
-        resources: # definicao de recursos como cpu e memoria para o pod
+          image: cgr.dev/chainguard/redis
+          command: ["sh", "-c"]
+          args:
+            - |
+              cp /tmp/redis/redis.conf /etc/redis/redis.conf
+            
+              echo "finding master..."
+              MASTER_FDQN=`hostname  -f | sed -e 's/redis-[0-9]\./redis-0./'`
+              if [ "$(redis-cli -h sentinel -p 5000 ping)" != "PONG" ]; then
+                echo "master not found, defaulting to redis-0"
+
+                if [ "$(hostname)" == "redis-0" ]; then
+                  echo "this is redis-0, not updating config..."
+                else
+                  echo "updating redis.conf..."
+                  echo "slaveof $MASTER_FDQN 6379" >> /etc/redis/redis.conf
+                fi
+              else
+                echo "sentinel found, finding master"
+                MASTER="$(redis-cli -h sentinel -p 5000 sentinel get-master-addr-by-name mymaster | grep -E '(^redis-\d{1,})|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3})')"
+                echo "master found : $MASTER, updating redis.conf"
+                echo "slaveof $MASTER 6379" >> /etc/redis/redis.conf
+              fi      
+          volumeMounts:
+            - name: redis-config
+              mountPath: /etc/redis/
+            - name: config
+              mountPath: /tmp/redis/
+      containers:  # definicao dos containers
+        - name: redis  # nome do container
+          image: cgr.dev/chainguard/redis:latest  # imagem do container
+          command: ["redis-server"]  # comando executado no container
+          args: ["/etc/redis/redis.conf"]
+          ports:  # definicao de portas
+            - containerPort: 6379  # porta escutada pelo container
+              name: redis
+          resources:  # definicao de recursos como cpu e memoria para o pod
+            requests:  # recursos mínimos reservados de cpu e memoria reservado ao pod
+              cpu: 0.5
+              memory: 128Mi
+            limits:  # recursos máximos de cpu e memoria que o pod deve usar
+              cpu: 0.8
+              memory: 256Mi
+          # Readiness e liveness probes podem ser usados em paralelo para o mesmo container. Usar ambos pode assegurar que a request(tráfego) não chegue em um container que não está pronto para isso, e que os containers são reiniciados quando falham
+          readinessProbe:  # pod(container) está vivo e pronto para receber conexões(requests) externas?
+            exec:
+              command:  # comando a ser executado
+                - sh
+                - -c
+                - "redis-cli -h $(hostname) ping"
+            initialDelaySeconds: 15  # O tempo que iremos esperar para executar a primeira vez a probe
+            timeoutSeconds: 5  # De quanto em quanto tempo iremos executar a probe
+            successThreshold: 1  # O número de vezes que a probe precisa passar para considerar que o container está pronto
+            failureThreshold: 3  # O número de vezes que a probe precisa falhar para considerar que o container não está pronto
+          livenessProbe:  # pod(container) está vivo?
+            exec:
+              command:  # comando a ser executado
+                - sh
+                - -c
+                - "redis-cli -h $(hostname) ping"
+            initialDelaySeconds: 20  # O tempo que iremos esperar para executar a primeira vez a probe
+            periodSeconds: 3  # De quanto em quanto tempo iremos executar a probe
+            successThreshold: 1  # O número de vezes que a probe precisa passar para considerar que o container está pronto
+            failureThreshold: 3  # O número de vezes que a probe precisa falhar para considerar que o container não está pronto
+          volumeMounts:
+            - name: www
+              mountPath: /data
+            - name: redis-config
+              mountPath: /etc/redis/
       volumes:
-      - name: redis-config
-        emptyDir: {}
-      - name: config
-        configMap:
-          name: redis-config
-  volumeClaimTemplates: # definicao de template de volume para cada pod
-  - metadata: # definicao de metadados do PVC(Persistent Volume Claim)
-      name: www # nome do volume, assim teremos o volume www-o, www-1 e www-2
-    spec: # especificacao do PVC
-      accessModes: ["ReadWriteOnce"] # Modo de acesso ao PV será de leitura e escrita e sem acesso simultaneo, ou seja, um node por vez
-      resources: # recursos para provisionar o volume persistente
-        requests: # solicitacao do PV
-          storage: 1Gi # capacidade do PV solicitado
-     
+        - name: redis-config
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: redis-config
+  volumeClaimTemplates:  # definicao de template de volume para cada pod
+    - metadata:  # definicao de metadados do PVC(Persistent Volume Claim)
+        name: www  # nome do volume, assim teremos o volume www-o, www-1 e www-2
+      spec:  # especificacao do PVC
+        accessModes: ["ReadWriteOnce"]  # Modo de acesso ao PV será de leitura e escrita e sem acesso simultaneo, ou seja, um node por vez
+        resources:  # recursos para provisionar o volume persistente
+          requests:  # solicitacao do PV
+            storage: 1Gi  # capacidade do PV solicitado

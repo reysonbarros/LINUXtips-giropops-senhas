@@ -1,3 +1,5 @@
+---
+# yamllint disable rule:line-length
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -397,7 +399,6 @@ data:
     # starting the replication synchronization process, otherwise the master will
     # refuse the replica request.
     #
-    
     #
     # However this is not enough if you are using Redis ACLs (for Redis version
     # 6 or greater), and the default user is not capable of running the PSYNC
@@ -791,8 +792,6 @@ data:
     # AUTH <password> as usually, or more explicitly with AUTH default <password>
     # if they follow the new protocol: both will work.
     #
-    
-
     # Command renaming (DEPRECATED).
     #
     # ------------------------------------------------------------------------

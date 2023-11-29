@@ -1,12 +1,14 @@
-apiVersion: apps/v1 # versao da API do Kubernetes
-kind: Deployment # tipo do objeto a ser criado
-metadata: 
+---
+# yamllint disable rule:line-length
+apiVersion: apps/v1  # versao da API do Kubernetes
+kind: Deployment  # tipo do objeto a ser criado
+metadata:
   name: giropops-senhas
   labels:
     app: giropops-senhas
 spec:
   replicas: 3
-  strategy: 
+  strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
@@ -20,40 +22,53 @@ spec:
         app: giropops-senhas
     spec:
       containers:
-      - name: giropops-senhas
-        image: reysonbarros/giropops-senhas:1.0
-        env:
-        - name: REDIS_HOST
-          value: "redis-0.redis.default.svc.cluster.local"
-        - name: REDIS_PASSWORD
-          value: "123456789@"  
-        ports:
-        - containerPort: 5000
-        resources:
-          requests:
-            cpu: 0.5      
-            memory: 128Mi
-          limits:   
-            cpu: 0.8
-            memory: 256Mi
-        livenessProbe: # Onde definimos a nossa probe de vida
-          exec: # O tipo exec é utilizado quando queremos executar algo dentro do container.
-            command: # Onde iremos definir qual comando iremos executar
-              - curl
-              - -f
-              - http://localhost:5000/
-          initialDelaySeconds: 10 # O tempo que iremos esperar para executar a primeira vez a probe
-          periodSeconds: 10 # De quanto em quanto tempo iremos executar a probe
-          timeoutSeconds: 5 # O tempo que iremos esperar para considerar que a probe falhou
-          successThreshold: 1 # O número de vezes que a probe precisa passar para considerar que o container está pronto
-          failureThreshold: 3 # O número de vezes que a probe precisa falhar para considerar que o container não está pronto
-        readinessProbe: # Onde definimos a nossa probe de prontidão
-          httpGet: # O tipo de teste que iremos executar, neste caso, iremos executar um teste HTTP
-            path: / # O caminho que iremos testar
-            port: 5000 # A porta que iremos testar
-          initialDelaySeconds: 10 # O tempo que iremos esperar para executar a primeira vez a probe
-          periodSeconds: 10 # De quanto em quanto tempo iremos executar a probe
-          timeoutSeconds: 5 # O tempo que iremos esperar para considerar que a probe falhou
-          successThreshold: 1 # O número de vezes que a probe precisa passar para considerar que o container está pronto
-          failureThreshold: 3 # O número de vezes que a probe precisa falhar para considerar que o container não está pronto    
-
+        - name: giropops-senhas
+          image: reysonbarros/giropops-senhas:1.0
+          env:
+            - name: REDIS_HOST
+              value: "redis-0.redis.default.svc.cluster.local"
+            - name: REDIS_PASSWORD
+              value: "123456789@"
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 128Mi
+            limits:
+              cpu: 0.8
+              memory: 256Mi
+          livenessProbe:  # Verificação de integridade
+            exec:  # Comando executado dentro do container
+              command:  # Onde iremos definir qual comando iremos executar
+                - curl
+                - -f
+                - http://localhost:5000/
+            initialDelaySeconds: 10  # Tempo aguardado antes da 1ª execução
+            periodSeconds: 10  # Intervalo que a probe será executada novamente
+            timeoutSeconds: 5  # Tempo para considerar que a probe falhou
+            successThreshold: 1  # Qtd OK da probe -> container READY
+            failureThreshold: 3  # Qtd FAIL da probe -> container NOT READY
+          readinessProbe:  #  Verificação para receber tráfego(requests)
+            httpGet:  # Execução de um teste HTTP
+              path: /  # O caminho que iremos testar
+              port: 5000  # A porta que iremos testar
+            initialDelaySeconds: 10  # Tempo aguardado antes da 1ª execução
+            periodSeconds: 10  # Intervalo que a probe será executada novamente
+            timeoutSeconds: 5  # Tempo para considerar que a probe falhou
+            successThreshold: 1  # Qtd OK da probe -> container READY
+            failureThreshold: 3  # Qtd FAIL da probe -> container NOT READY
+          securityContext:
+            readOnlyRootFilesystem: true
+      affinity:
+        podAntiAffinity:  # Evita pods(same label) rodar no mesmo node(topologia)
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:  # label do pod
+                matchExpressions:
+                  - key: "app"  # nome da label do pod
+                    operator: In
+                    values:  # valores da label do pod a serem buscados
+                      - giropops-senhas
+              topologyKey: "kubernetes.io/hostname"
+      securityContext:
+        runAsNonRoot: true
