@@ -105,7 +105,8 @@ docker login
 docker image push reysonbarros/giropops-redis:7.2.3
 ```
 
-![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/99c65fdc-a273-4677-a0d9-504b1879ed03)
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/57e9604b-d00f-499d-b932-0f866090e043)
+
 
 
 
