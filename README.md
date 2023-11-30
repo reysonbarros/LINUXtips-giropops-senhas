@@ -113,12 +113,18 @@ docker image push reysonbarros/giropops-redis:7.2.3
 ### 1.4 - Verificação de segurança
 > [!WARNING]
 > **O que é o trivy?** É uma ferramenta para scan de vulnerabilidades em containers.
-Comando executado no trivy para realizar a análise de vulnerabilidades em uma imagem:
+Comando executado no trivy para realizar a análise de vulnerabilidades em imagens:
 ```
 trivy image reysonbarros/giropops-senhas:1.0
+trivy image reysonbarros/giropops-redis:7.2.3
 
 ```
-![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/783e7af7-c06d-4fd5-8996-d7263119845b)
+
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/f96b3ec3-3043-46f5-99d5-d4e1cd1af859)
+
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/bdb8cdb6-2741-42e7-b66f-d9ed9f8ca2d2)
+
+
 
 
 ### 1.5 - Manifestos YAML
