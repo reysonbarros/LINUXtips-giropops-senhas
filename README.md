@@ -89,12 +89,22 @@ TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 > [!NOTE]
 > **Chainguard, já ouviu falar?** Empresas como Chainguard e Google se destacam nesse contexto por serem grandes provedores desse modelo(distroless) de imagem de container. Como exemplo, podemos citar o Wolfi OS mantido pela Chainguard que é uma undistro(sem distribuição), ou seja, usa a filosofia distroless com um modelo minimalista projetado para ambientes em containers contendo somente os recursos necessários para seu funcionamento.
 
-Os comandos abaixo irão gerar uma imagem distroless com multistage build deixando-a mais otimizada, com um tamanho menor que imagens convencionais e sem vulnerabilidades, além de fazer o push para o dockerhub
+Os comandos abaixo irão gerar imagens distroless com multistage build deixando-as mais otimizadas, com um tamanho menor que imagens convencionais e sem vulnerabilidades, além de fazer o push para o Dockerhub
+
+Build e push da image do giropops-senhas ao Dockerhub
 ```
-docker image build --no-cache -t reysonbarros/giropops-senhas:1.0 .
+docker image build --no-cache -f Dockerfile-app -t reysonbarros/giropops-senhas:1.0 .
 docker login
 docker image push reysonbarros/giropops-senhas:1.0
 ```
+
+Build e push da image do giropops-redis ao Dockerhub
+```
+docker image build --no-cache -f Dockerfile-redis -t reysonbarros/giropops-redis:7.2.3 .
+docker login
+docker image push reysonbarros/giropops-redis:7.2.3
+```
+
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/99c65fdc-a273-4677-a0d9-504b1879ed03)
 
 
