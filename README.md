@@ -218,9 +218,18 @@ Testando a aplicação via browser
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/acb5e385-eb2b-498a-9e7e-9ac8b2118c33)
 
 > [!NOTE]
-> Para acessar a aplicação utilizar um dos IPs da coluna INTERNAL-IP dos nodes(k get nodes -o wide) e a porta mapeada para os nodes no serviço giropops-senhas(k get svc)
-![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/fa52858f-2ca6-41d0-99f3-b06fd81979e3)
-![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/e5544568-ab5c-494e-9bae-7a2828e673f1)
+> Para acessar a aplicação utilizar um dos IPs da coluna INTERNAL-IP dos nodes
+```
+k get nodes -o wide
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/5793825f-1d60-4382-b26d-aaaafd0703fa)
+
+
+Porta 32000 mapeada para os nodes no serviço giropops-senhas
+```
+k get svc -n dev
+```
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/2f20dd6b-22e5-4ae4-a100-7828e38833e7)
 
 
 ### 1.6 - Práticas recomendadas
