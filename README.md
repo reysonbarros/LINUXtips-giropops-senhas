@@ -128,6 +128,7 @@ trivy image reysonbarros/giropops-senhas:1.0
 
 > [!IMPORTANT]
 > Acessar a pasta k8s para executar os próximos comandos
+
 cd k8s/
 
 Criação do Cluster giropops com 1 node control-plane e 3 nodes workers
