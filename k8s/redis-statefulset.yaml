@@ -18,8 +18,17 @@ spec:  # especificacao do objeto StatefulSet
     spec:  # especificacao dos containers
       initContainers:
         - name: config
-          image: cgr.dev/chainguard/redis
+          image: reysonbarros/giropops-redis:7.2.3
           command: ["sh", "-c"]
+          securityContext:
+            readOnlyRootFilesystem: true
+          resources:
+            requests:
+              cpu: 0.5
+              memory: 128Mi
+            limits:
+              cpu: 0.8
+              memory: 256Mi
           args:
             - |
               cp /tmp/redis/redis.conf /etc/redis/redis.conf
@@ -48,19 +57,19 @@ spec:  # especificacao do objeto StatefulSet
               mountPath: /tmp/redis/
       containers:  # definicao dos containers
         - name: redis  # nome do container
-          image: cgr.dev/chainguard/redis:latest  # imagem do container
+          image: reysonbarros/giropops-redis:7.2.3  # imagem do container
           command: ["redis-server"]  # comando executado no container
           args: ["/etc/redis/redis.conf"]
           ports:  # definicao de portas
             - containerPort: 6379  # porta escutada pelo container
               name: redis
-          resources:  # definicao de recursos como cpu e memoria para o pod
-            requests:  # recursos mínimos reservados de cpu e memoria reservado ao pod
+          resources:
+            requests:
               cpu: 0.5
               memory: 128Mi
-            limits:  # recursos máximos de cpu e memoria que o pod deve usar
+            limits:
               cpu: 0.8
-              memory: 256Mi
+              memory: 256Mi    
           # Readiness e liveness probes podem ser usados em paralelo para o mesmo container. Usar ambos pode assegurar que a request(tráfego) não chegue em um container que não está pronto para isso, e que os containers são reiniciados quando falham
           readinessProbe:  # pod(container) está vivo e pronto para receber conexões(requests) externas?
             exec:
@@ -82,6 +91,10 @@ spec:  # especificacao do objeto StatefulSet
             periodSeconds: 3  # De quanto em quanto tempo iremos executar a probe
             successThreshold: 1  # O número de vezes que a probe precisa passar para considerar que o container está pronto
             failureThreshold: 3  # O número de vezes que a probe precisa falhar para considerar que o container não está pronto
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
           volumeMounts:
             - name: www
               mountPath: /data
@@ -93,6 +106,9 @@ spec:  # especificacao do objeto StatefulSet
         - name: config
           configMap:
             name: redis-config
+      securityContext:
+        runAsUser: 1000
+        runAsNonRoot: true
   volumeClaimTemplates:  # definicao de template de volume para cada pod
     - metadata:  # definicao de metadados do PVC(Persistent Volume Claim)
         name: www  # nome do volume, assim teremos o volume www-o, www-1 e www-2

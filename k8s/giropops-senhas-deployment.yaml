@@ -26,7 +26,7 @@ spec:
           image: reysonbarros/giropops-senhas:1.0
           env:
             - name: REDIS_HOST
-              value: "redis-0.redis.default.svc.cluster.local"
+              value: "redis-0.redis.dev.svc.cluster.local"
             - name: REDIS_PASSWORD
               value: "123456789@"
           ports:
@@ -39,11 +39,9 @@ spec:
               cpu: 0.8
               memory: 256Mi
           livenessProbe:  # Verificação de integridade
-            exec:  # Comando executado dentro do container
-              command:  # Onde iremos definir qual comando iremos executar
-                - curl
-                - -f
-                - http://localhost:5000/
+            httpGet:  # Execução de um teste HTTP
+              path: /  # O caminho que iremos testar
+              port: 5000  # A porta que iremos testar
             initialDelaySeconds: 10  # Tempo aguardado antes da 1ª execução
             periodSeconds: 10  # Intervalo que a probe será executada novamente
             timeoutSeconds: 5  # Tempo para considerar que a probe falhou
@@ -59,6 +57,7 @@ spec:
             successThreshold: 1  # Qtd OK da probe -> container READY
             failureThreshold: 3  # Qtd FAIL da probe -> container NOT READY
           securityContext:
+            runAsNonRoot: true
             readOnlyRootFilesystem: true
       affinity:
         podAntiAffinity:  # Evita pods(same label) rodar no mesmo node(topologia)
@@ -70,5 +69,3 @@ spec:
                     values:  # valores da label do pod a serem buscados
                       - giropops-senhas
               topologyKey: "kubernetes.io/hostname"
-      securityContext:
-        runAsNonRoot: true
