@@ -229,7 +229,8 @@ Porta 32000 mapeada para os nodes no serviço giropops-senhas
 ```
 k get svc -n dev
 ```
-![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/2f20dd6b-22e5-4ae4-a100-7828e38833e7)
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/809143e0-f11c-4640-88b4-8f258cd234a2)
+
 
 
 ### 1.6 - Práticas recomendadas
