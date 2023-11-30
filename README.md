@@ -173,21 +173,21 @@ kubectl get services -n dev
 
 Listagem do Persistent Volume Claim
 ```
-kubectl get pvc
+kubectl get pvc -n dev
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/8caf66b1-db5d-427e-8290-66e9d2695231)
 
 
 Listagem do Persistent Volume
 ```
-kubectl get pv
+kubectl get pv -n dev
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/4763f172-1d33-4f2d-8e83-c387cd8f9981)
 
 
 Teste interno(dentro do cluster) de comunicação entre os pods do giropops-senhas e redis
 ```
-k exec -it giropops-senhas-954766894-cfm6v -- python
+k exec -it giropops-senhas-954766894-cfm6v -n dev -- python
 >>> import redis
 >>> import os
 >>> redis_host = os.environ.get('REDIS_HOST')
