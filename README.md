@@ -91,7 +91,7 @@ TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 
 Os comandos abaixo irão gerar uma imagem distroless com multistage build deixando-a mais otimizada, com um tamanho menor que imagens convencionais e sem vulnerabilidades, além de fazer o push para o dockerhub
 ```
-docker image build -t reysonbarros/giropops-senhas:1.0 .
+docker image build --no-cache -t reysonbarros/giropops-senhas:1.0 .
 docker login
 docker image push reysonbarros/giropops-senhas:1.0
 ```
