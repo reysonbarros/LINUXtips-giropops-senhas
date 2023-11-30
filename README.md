@@ -93,14 +93,14 @@ Os comandos abaixo irão gerar imagens distroless com multistage build deixando-
 
 Build e push da image do giropops-senhas ao Dockerhub
 ```
-docker image build --no-cache -f Dockerfile-app -t reysonbarros/giropops-senhas:1.0 .
+docker image build --no-cache -f Dockerfile-app.yaml -t reysonbarros/giropops-senhas:1.0 .
 docker login
 docker image push reysonbarros/giropops-senhas:1.0
 ```
 
 Build e push da image do giropops-redis ao Dockerhub
 ```
-docker image build --no-cache -f Dockerfile-redis -t reysonbarros/giropops-redis:7.2.3 .
+docker image build --no-cache -f Dockerfile-redis.yaml -t reysonbarros/giropops-redis:7.2.3 .
 docker login
 docker image push reysonbarros/giropops-redis:7.2.3
 ```
