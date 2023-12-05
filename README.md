@@ -236,8 +236,6 @@ k get svc -n dev
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/809143e0-f11c-4640-88b4-8f258cd234a2)
 
-
-
 ### 1.6 - Práticas recomendadas
 > [!IMPORTANT]
 > **O que são probes?** Probe significa sondar, examinar algo. As probes são uma forma de você monitorar o seu Pod e saber se ele está em um estado saudável ou não
@@ -277,6 +275,32 @@ Exemplo de análise com kube-linter
 kube-linter lint .
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/22199ab2-d8b3-4b3a-987e-6189e0faaf10)
+
+
+### 1.7 - Assinatura de imagem com Cosign
+> [!IMPORTANT]
+> **O que é o cosign?** Utilitário de linha de comando que serve para assinar imagem de container além de validar a assinatura e é mantido pela Linux Foundation sobre o projeto open source Sigstore
+
+> [!TIP]
+> **A imagem precisa estar no registry(público/privado, nesse caso no dockerhub) para conseguir assinar/verificar.**
+
+Gerar o par de chaves para as imagens do giropops-senhas e do giropops-redis
+```
+cosign generate-key-pair --output-key-prefix giropops-senhas
+cosign generate-key-pair --output-key-prefix giropops-redis
+```
+
+Assinar a imagem do giropops-senhas e do giropops-redis
+```
+cosign sign --key giropops-senhas.key reysonbarros/giropops-senhas:1.0
+cosign sign --key giropops-redis.key reysonbarros/giropops-redis:7.2.3
+```
+
+Validar a assinatura da imagem do giropops-senhas e do giropops-redis
+```
+cosign verify --key giropops-senhas.pub reysonbarros/giropops-senhas:1.0
+cosign verify --key giropops-redis.pub reysonbarros/giropops-redis:7.2.3
+```
 
 ### Referências
 https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-affinity
