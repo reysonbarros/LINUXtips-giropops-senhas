@@ -263,13 +263,13 @@ Nesse projeto, as probes e limites de recursos foram implementados no deployment
 
 Exemplo de análise com yamllint
 ```
-yamllint k8s/cluster.yaml
+yamllint .
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/b42997b7-403b-42a6-b020-779f6918a5b3)
 
 Exemplo de análise com kube-linter
 ```
-kube-linter lint k8s/giropops-senhas-deployment.yaml
+kube-linter lint .
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/22199ab2-d8b3-4b3a-987e-6189e0faaf10)
 
