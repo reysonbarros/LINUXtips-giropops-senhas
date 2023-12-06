@@ -305,6 +305,9 @@ cosign verify --key giropops-redis.pub reysonbarros/giropops-redis:7.2.3
 ```
 
 ## 5 - Monitoramento com Prometheus
+
+### 5.1 - Configuração com Prometheus
+
 > [!IMPORTANT]
 > **O que é o Prometheus?** É uma ferramenta open-source que serve para monitoramento e alerta de todos os componentes do cluster Kubernetes, como por exemplo: kube-scheduler, kube-controller-manager, kubelet, kube-proxy, etc
 
