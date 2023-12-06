@@ -1,1 +1,2 @@
 cosign/*.key
+k8s/kube-prometheus/*
