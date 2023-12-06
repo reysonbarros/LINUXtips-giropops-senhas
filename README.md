@@ -65,8 +65,10 @@ sudo chmod +x /usr/local/bin/cosign
 
 ## 1 - Preparação do projeto
 
-### 1.1 - Estruturação do repositório
-TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
+### 1.1 - Fork do repositório
+Realizar o fork do repositório https://github.com/badtuxx/giropops-senhas
+
+### 1.2 - Estruturação do repositório
 - **app.py**: arquivo principal da aplicação python
 - **Dockerfile**: arquivo com as instruções para criação da imagen de container
 - **LICENSE**: termo onde constam os detalhes de como o source code do projeto pode ser manipulado, divulgado e usado por terceiros
@@ -77,14 +79,16 @@ TODO: Adicionar print da estrutura de arquivos ao finalizar o projeto
 - **tailwind.config.js**: arquivo para exportação de módulos(ex: temas, plugins)
 - **k8s**: pasta contendo os manifestos yaml(cluster, deployments e services)
 
-### 1.2 - Construção das imagens
+## 2 - Desenvolvimento da imagem Docker
+
+### 2.1 - Construção da imagen
 > [!IMPORTANT]
 > **O que é uma imagem?** No mundo de containers, imagens são formadas por camadas, onde dentro dessas camadas é possível encontrar todas as dependências, blibliotecas e arquivos necessários para criação do container
 
 > [!IMPORTANT]
 > **O que é um container?** É um processo isolado do sistema operacional onde utiliza recursos como cgroups, namespaces e chroot para provisionamento de seus processos. Todo container é derivado de uma imagem, ou seja, sua origem tem como base uma imagem.
 
-### 1.3 - Otimização de imagens
+### 2.2 - Otimização de imagens
 > [!TIP]
 > **O que é o multistage build?** É uma técnica usada para realizar o build de imagens separados em fases dentro do Dockerfile visando criar imagens menores, otimizadas e sem dependências ou arquivos desnecessários
 
@@ -112,10 +116,9 @@ docker image push reysonbarros/giropops-redis:7.2.3
 
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/57e9604b-d00f-499d-b932-0f866090e043)
 
+## 3 - Configuração do Kubernetes
 
-
-
-### 1.4 - Verificação de segurança
+### 3.1 - Verificação de segurança
 > [!WARNING]
 > **O que é o trivy?** É uma ferramenta para scan de vulnerabilidades em containers.
 Comando executado no trivy para realizar a análise de vulnerabilidades em imagens:
@@ -130,9 +133,7 @@ trivy image reysonbarros/giropops-redis:7.2.3
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/bdb8cdb6-2741-42e7-b66f-d9ed9f8ca2d2)
 
 
-
-
-### 1.5 - Manifestos YAML
+### 3.2 - Manifestos YAML
 > [!IMPORTANT]
 > **O que é um cluster?** Conjunto de 1 ou mais nodes dentro de uma rede
 
@@ -236,7 +237,7 @@ k get svc -n dev
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/809143e0-f11c-4640-88b4-8f258cd234a2)
 
-### 1.6 - Práticas recomendadas
+### 3.3 - Práticas recomendadas
 > [!IMPORTANT]
 > **O que são probes?** Probe significa sondar, examinar algo. As probes são uma forma de você monitorar o seu Pod e saber se ele está em um estado saudável ou não
 
@@ -254,7 +255,7 @@ k get svc -n dev
 
 Nesse projeto, as probes e limites de recursos foram implementados no deployment do giropops-senhas e no statefulset do redis seguindo as boas práticas de monitoramento, estabilidade e eficiência
 
-### 1.7 - Linting de YAML
+### 3.4 - Linting de YAML
 > [!IMPORTANT]
 > **O que é linter?** Lint ou linter é uma ferramenta que realiza uma varredura sobre código estático na tentativa de identificar possíveis bugs e falhas/erros de programação. Um linter é responsável por capturar erros nos dados antes que sejam processados. Dessa forma, isso economiza tempo em análises de erros durante operações de alta robustez e criticidade
 
@@ -276,8 +277,9 @@ kube-linter lint .
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/22199ab2-d8b3-4b3a-987e-6189e0faaf10)
 
+## 4 - Segurança e assinatura da imagem com Cosign
 
-### 1.7 - Assinatura de imagem com Cosign
+### 4.1 - Assinatura com Cosign
 > [!IMPORTANT]
 > **O que é o cosign?** Utilitário de linha de comando que serve para assinar imagem de container além de validar a assinatura e é mantido pela Linux Foundation sobre o projeto open source Sigstore
 
@@ -301,6 +303,20 @@ Validar a assinatura da imagem do giropops-senhas e do giropops-redis
 cosign verify --key giropops-senhas.pub reysonbarros/giropops-senhas:1.0
 cosign verify --key giropops-redis.pub reysonbarros/giropops-redis:7.2.3
 ```
+
+## 5 - Monitoramento com Prometheus
+> [!IMPORTANT]
+> **O que é o Prometheus?** É uma ferramenta open-source que serve para monitoramento e alerta de todos os componentes do cluster Kubernetes, como por exemplo: kube-scheduler, kube-controller-manager, kubelet, kube-proxy, etc
+
+> [!IMPORTANT]
+> **O que é o Grafana?** Grafana é um sistema que permite realizar consultas, visualizar e receber alertas, além de explorar métricas e logs através de dashboards de tudo que for possível coletar
+
+> [!IMPORTANT]
+> **O que é o AlertManager?** AlertManager intercepta alertas enviados por aplicações clientes como por exemplo o servidor Prometheus, além de agrupar e rotear esses alertas para seu devido destino
+
+> [!IMPORTANT]
+> **O que é o ServiceMonitor?** É uma funcionalidade do Prometheus Operator onde é possível configurá-lo para monitorar um ou mais serviços
+
 
 ### Referências
 https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-affinity
