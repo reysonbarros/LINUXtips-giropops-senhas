@@ -320,26 +320,37 @@ cosign verify --key giropops-redis.pub reysonbarros/giropops-redis:7.2.3
 
 ### 5.1 - Configuração com Prometheus
 
-# Instalação dos CRDs(Custom Resource Definitions) do Kube-Prometheus
+Instalação dos CRDs(Custom Resource Definitions) do Kube-Prometheus
+```
 git clone https://github.com/prometheus-operator/kube-prometheus
 cd kube-prometheus
 kubectl create -f manifests/setup
+```
 
-# Instalação do Prometheus, AlertManager e Grafana
+Instalação do Prometheus, AlertManager e Grafana
+```
 kubectl apply -f manifests/
+```
 
-# Validar se a instalação dos service monitors e pods foram concluídas
+Validar se a instalação dos service monitors e pods foram concluídas
+```
 kubectl get servicemonitors -n monitoring
 kubectl get pods -n monitoring
+```
 
-# Mapeamento das portas do Grafana, Prometheus e AlertManager para acesso localhost via port-forward
+Mapeamento das portas do Grafana, Prometheus e AlertManager para acesso localhost via port-forward
+```
 kubectl port-forward -n monitoring svc/grafana 33000:3000
 kubectl port-forward -n monitoring svc/prometheus-k8s 39090:9090
 kubectl port-forward -n monitoring svc/alertmanager-main 39093:9093
+```
 
-# Abrir o browser e acessar:
+Abrir o browser e acessar:
+
 Grafana(user e password = admin) - http://localhost:33000
+
 Prometheus - http://localhost:39090
+
 AlertManager - http://localhost:39093
 
 
