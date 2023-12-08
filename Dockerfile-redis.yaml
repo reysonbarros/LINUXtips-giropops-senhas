@@ -1,0 +1,10 @@
+FROM cgr.dev/chainguard/redis:latest
+
+LABEL org.opencontainers.image.authors="Reyson Barros <reysonbarros@gmail.com>" \
+      stack="Redis" \
+      version="7.2.3"
+
+EXPOSE 6379
+
+ENTRYPOINT  ["/usr/bin/redis-server"]
+

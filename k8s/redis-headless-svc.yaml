@@ -1,0 +1,17 @@
+---
+# yamllint disable rule:line-length
+apiVersion: v1  # versao da API do Kubernetes
+kind: Service  # tipo de objeto criado, nesse caso, um Service
+metadata:  # metadados do objeto
+  name: redis  # nome do Service
+  labels:  # definicao de labels do Service
+    app: redis  # label app com valor redis
+spec:  # especificacao do servico
+  selector:  # definicao do selector referente ao pods para esse Service
+    app: redis  # pods com label app serao expostos por esse Service
+  ports:  # definicao das portas do Service
+    - port: 6379  # service na porta 6379
+      protocol: TCP  # protocolo de comunicacao TCP(Transmission Control Protocol)
+      name: http  # descricao para a porta
+      targetPort: 6379  # porta do container
+  clusterIP: None  # Como estamos criando um Headless Service, não queremos que ele tenha um IP, então definimos como None
