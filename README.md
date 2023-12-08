@@ -339,12 +339,13 @@ kubectl get pods -n monitoring
 > [!WARNING]
 > Continuar com os próximos passos somente quando os pods estiverem com status READY
 
+
 Instalação do ClusterRole, ServiceMonitor e PodMonitor referente ao giropops-senhas
 ```
 cd k8s/
 kubectl apply -f cluster-role.yaml
-giropops-senhas-service-monitor.yaml
-giropops-senhas-pod-monitor.yaml
+kubectl apply -f giropops-senhas-service-monitor.yaml
+kubectl apply -f giropops-senhas-pod-monitor.yaml
 ```
 
 Validar se a instalação dos serviceMonitors e podMonitors referente ao giropops-senhas foi concluída
