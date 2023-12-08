@@ -15,11 +15,9 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-      - name: Instalação do docker
+      - name: Exibindo versão do docker e validando comunicação com o Dockerhub
         run: |
-          apt-get update -y && /
-          apt-get install curl -y && /
-          curl -fsSL https://get.docker.com/ | bash && /
-          docker version
+          docker version && \
+          docker run hello-world
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
