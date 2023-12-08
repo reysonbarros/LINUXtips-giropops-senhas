@@ -369,6 +369,10 @@ Prometheus - http://localhost:39090
 
 AlertManager - http://localhost:39093
 
+![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/d48b227e-2d1f-4d32-9c21-7f1605749825)
+
+> [!NOTE]
+> Adicionado print dos targets monitorados pelo serviceMonitor e podMonitor no Prometheus
 
 ### Referências
 https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-affinity
