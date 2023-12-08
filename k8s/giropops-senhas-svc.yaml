@@ -5,7 +5,7 @@ kind: Service  # tipo de objeto criado, nesse caso, um Service
 metadata:  # metadados do objeto
   name: giropops-senhas  # nome do Service
   labels:  # definicao de labels do Service
-    app: giropops-senhas  # label app com valor nginx
+    app: giropops-senhas
 spec:  # especificacao do servico
   selector:  # definicao do selector referente ao pods para esse Service
     app: giropops-senhas  # pods com label app serao expostos por esse Service
