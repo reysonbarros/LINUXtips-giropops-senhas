@@ -336,6 +336,8 @@ Validar se a instalação dos servicemonitors e pods do namespace monitoring foi
 kubectl get servicemonitors -n monitoring
 kubectl get pods -n monitoring
 ```
+> [!WARNING]
+> Continuar com os próximos passos somente quando os pods estiverem com status READY
 
 Instalação do ClusterRole, ServiceMonitor e PodMonitor referente ao giropops-senhas
 ```
