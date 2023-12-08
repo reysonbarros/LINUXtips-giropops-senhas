@@ -343,9 +343,9 @@ kubectl get pods -n monitoring
 Instalação do ClusterRole, ServiceMonitor e PodMonitor referente ao giropops-senhas
 ```
 cd k8s/
-kubectl apply -f cluster-role.yaml
-kubectl apply -f giropops-senhas-servicemonitor.yaml
-kubectl apply -f giropops-senhas-podmonitor.yaml
+kubectl apply -f cluster-role.yaml -n dev
+kubectl apply -f giropops-senhas-servicemonitor.yaml -n dev
+kubectl apply -f giropops-senhas-podmonitor.yaml -n dev
 ```
 
 Validar se a instalação dos serviceMonitors e podMonitors referente ao giropops-senhas foi concluída
