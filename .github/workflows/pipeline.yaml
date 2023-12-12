@@ -91,6 +91,10 @@ jobs:
         run: |
           kubectl apply -f ${{ github.workspace }}/k8s/giropops-senhas-svc.yaml -n dev
       - 
+        name: Sleep de 60 segundos aguardando status READY para os pods
+        run: |
+          sleep 60      
+      - 
         name: Listagem dos Pods
         run: |
           kubectl get pods -n dev
