@@ -70,4 +70,42 @@ jobs:
         name: Criação do Namespace dev
         run: |
           kubectl apply -f ${{ github.workspace }}/k8s/dev-namespace.yaml
-          
+      - 
+        name: Criação do ConfigMap para o redis
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/redis-configmap.yaml -n dev
+      - 
+        name: Criação do StatefulSet para o redis
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/redis-statefulset.yaml -n dev
+      - 
+        name: Criação do Service para o redis
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/redis-headless-svc.yaml -n dev
+      - 
+        name: Criação do Deployment para a aplicação giropops-senhas
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/giropops-senhas-deployment.yaml -n dev
+      - 
+        name: Criação do Service para a aplicação giropops-senhas
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/giropops-senhas-svc.yaml -n dev
+      - 
+        name: Listagem dos Pods
+        run: |
+          kubectl get pods -n dev
+      - 
+        name: Listagem dos Services
+        run: |
+          kubectl get services -n dev
+      - 
+        name: Listagem do Persistent Volume Claim
+        run: |
+          kubectl get pvc -n dev
+      - 
+        name: Listagem do Persistent Volume
+        run: |
+          kubectl get pv -n dev
+
+
+
