@@ -45,13 +45,13 @@ jobs:
     steps:
       - name: Verificando diretório atual
         run: |
-          ls
+          ls ${{ github.workspace }}
       - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.8.0
         with:
           version: "v0.20.0"
           kubectl_version: "v1.28.2"
-          config: "./k8s/cluster.yaml"
+          config: "${{ github.workspace }}/k8s/cluster.yaml"
           verbosity: "1"
       - name: Testando kubectl
         run: |
