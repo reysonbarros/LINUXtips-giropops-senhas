@@ -40,7 +40,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/giropops-redis:7.2.3
   
-  create-cluster:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -110,6 +110,11 @@ jobs:
         name: Listagem do Persistent Volume
         run: |
           kubectl get pv -n dev
+      - 
+        name: Teste via curl na aplicação
+        run: |
+          curl 172.18.0.5:32000
+    
 
 
 
