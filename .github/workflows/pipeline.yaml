@@ -48,7 +48,7 @@ jobs:
         name: Checkout do repositório
         uses: actions/checkout@v4      
       - 
-        name: Criando o cluster
+        name: Criação do cluster giropops com 1 node control-plane e 3 nodes workers
         uses: helm/kind-action@v1.8.0
         with:
           version: "v0.20.0"
@@ -66,4 +66,8 @@ jobs:
           kubectl cluster-info
           kubectl get nodes -o wide
           kubectl describe nodes
+      - 
+        name: Criação do Namespace dev
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/dev-namespace.yaml
           
