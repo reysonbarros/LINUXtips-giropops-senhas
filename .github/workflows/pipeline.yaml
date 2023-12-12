@@ -48,7 +48,7 @@ jobs:
         with:
           version: "v0.20.0"
           kubectl_version: "v1.28.2"
-          config: "../k8s/cluster.yaml"
+          config: "k8s/cluster.yaml"
           verbosity: "1"
       - name: Testando kubectl
         run: |
