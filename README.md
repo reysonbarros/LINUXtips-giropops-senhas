@@ -386,3 +386,7 @@ https://github.com/aquasecurity/trivy-action
 https://docs.github.com/en/actions/quickstart
 
 https://docs.docker.com/build/ci/github-actions
+
+https://docs.github.com/en/actions/using-workflows/about-workflows#creating-dependent-jobs
+
+https://github.com/helm/kind-action
