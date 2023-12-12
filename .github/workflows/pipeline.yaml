@@ -57,6 +57,10 @@ jobs:
           cluster_name: "giropops"
           kubectl_version: "v1.28.2"                    
       - 
+        name: Sleep de 30 segundos aguardando status READY para worker nodes
+        run: |
+          sleep 30
+      - 
         name: Verificando informações do cluster
         run: |
           kubectl cluster-info
