@@ -1,0 +1,142 @@
+---
+name: CI/CD - Integração e Entrega Contínuas
+
+on:
+  push:
+    branches:
+      - "main"
+      - "development"
+      - "feature/cicd"
+
+jobs:
+  linters:    
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Checkout do repositório
+        uses: actions/checkout@v4
+      - 
+        name: Análise de código com yamllint
+        uses: karancode/yamllint-github-action@master
+        with:
+          yamllint_file_or_dir: ${{ github.workspace }}
+          yamllint_config_filepath: ${{ github.workspace }}/.yamllint
+          yamllint_strict: false
+          yamllint_comment: true
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - 
+        name: Análise de código com kube-linter
+        uses: stackrox/kube-linter-action@v1.0.4
+        with:
+          directory: ${{ github.workspace }}/k8s          
+          format: sarif
+          output-file: kube-linter.log          
+ 
+  build:
+    needs: linters
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout do repositório
+        uses: actions/checkout@v4
+      -
+        name: Login no Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Configurando o Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      -
+        name: Build e push do giropops-senhas
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.app
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/giropops-senhas:1.0
+      -
+        name: Build e push do giropops-redis
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.redis
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/giropops-redis:7.2.3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout do repositório
+        uses: actions/checkout@v4      
+      - 
+        name: Criação do cluster giropops com 1 node control-plane e 3 nodes workers
+        uses: helm/kind-action@v1.8.0
+        with:
+          version: "v0.20.0"
+          config: "${{ github.workspace }}/k8s/cluster.yaml"
+          node_image: "kindest/node:v1.27.3@sha256:3966ac761ae0136263ffdb6cfd4db23ef8a83cba8a463690e98317add2c9ba72"
+          cluster_name: "giropops"
+          kubectl_version: "v1.28.2"                    
+      - 
+        name: Sleep de 30 segundos aguardando status READY para worker nodes
+        run: |
+          sleep 30
+      - 
+        name: Verificando informações do cluster
+        run: |
+          kubectl cluster-info
+          kubectl get nodes -o wide
+          kubectl describe nodes
+      - 
+        name: Criação do Namespace dev
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/dev-namespace.yaml
+      - 
+        name: Criação do ConfigMap para o redis
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/redis-configmap.yaml -n dev
+      - 
+        name: Criação do StatefulSet para o redis
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/redis-statefulset.yaml -n dev
+      - 
+        name: Criação do Service para o redis
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/redis-headless-svc.yaml -n dev
+      - 
+        name: Criação do Deployment para a aplicação giropops-senhas
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/giropops-senhas-deployment.yaml -n dev
+      - 
+        name: Criação do Service para a aplicação giropops-senhas
+        run: |
+          kubectl apply -f ${{ github.workspace }}/k8s/giropops-senhas-svc.yaml -n dev
+      - 
+        name: Sleep de 60 segundos aguardando status READY para os pods
+        run: |
+          sleep 60      
+      - 
+        name: Listagem dos Pods
+        run: |
+          kubectl get pods -n dev
+      - 
+        name: Listagem dos Services
+        run: |
+          kubectl get services -n dev
+      - 
+        name: Listagem do Persistent Volume Claim
+        run: |
+          kubectl get pvc -n dev
+      - 
+        name: Listagem do Persistent Volume
+        run: |
+          kubectl get pv -n dev
+      - 
+        name: Teste via curl na aplicação
+        run: |
+          curl 172.18.0.5:32000

@@ -102,14 +102,14 @@ Os comandos abaixo irão gerar imagens distroless com multistage build deixando-
 
 Build e push da image do giropops-senhas ao Dockerhub
 ```
-docker image build --no-cache -f Dockerfile-app.yaml -t reysonbarros/giropops-senhas:1.0 .
+docker image build --no-cache -f Dockerfile.app -t reysonbarros/giropops-senhas:1.0 .
 docker login
 docker image push reysonbarros/giropops-senhas:1.0
 ```
 
 Build e push da image do giropops-redis ao Dockerhub
 ```
-docker image build --no-cache -f Dockerfile-redis.yaml -t reysonbarros/giropops-redis:7.2.3 .
+docker image build --no-cache -f Dockerfile.redis -t reysonbarros/giropops-redis:7.2.3 .
 docker login
 docker image push reysonbarros/giropops-redis:7.2.3
 ```
@@ -267,7 +267,7 @@ Nesse projeto, as probes e limites de recursos foram implementados no deployment
 
 Exemplo de análise com yamllint
 ```
-yamllint .
+yamllint -d .yamllint .
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/b42997b7-403b-42a6-b020-779f6918a5b3)
 
@@ -380,3 +380,17 @@ https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-aff
 https://github.com/kubernetes-sigs/kind/releases
 
 https://medium.com/@pushkarjoshi0410/assigning-pods-to-nodes-using-affinity-and-anti-affinity-df18377244b9
+
+https://github.com/aquasecurity/trivy-action
+
+https://docs.github.com/en/actions/quickstart
+
+https://docs.docker.com/build/ci/github-actions
+
+https://docs.github.com/en/actions/using-workflows/about-workflows#creating-dependent-jobs
+
+https://github.com/helm/kind-action
+
+https://github.com/marketplace/actions/yamllint-github-action
+
+https://github.com/stackrox/kube-linter-action
