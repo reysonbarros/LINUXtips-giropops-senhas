@@ -390,3 +390,5 @@ https://docs.docker.com/build/ci/github-actions
 https://docs.github.com/en/actions/using-workflows/about-workflows#creating-dependent-jobs
 
 https://github.com/helm/kind-action
+
+https://github.com/marketplace/actions/yamllint-github-action
