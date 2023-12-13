@@ -8,7 +8,32 @@ on:
       - "feature/cicd"
 
 jobs:
+  linters:
+    name: Linting de YAML
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Checkout do repositório
+        uses: actions/checkout@v4
+      - 
+        name: Análise de código com yamllint
+        uses: karancode/yamllint-github-action@master
+        with:
+          yamllint_file_or_dir: ${{ github.workspace }}
+          yamllint_strict: true
+          yamllint_comment: true
+        env:
+          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - 
+        name: Análise de código com kube-linter
+        uses: stackrox/kube-linter-action@v1.0.4
+        with:
+          directory: ${{ github.workspace }}/k8s          
+          format: sarif
+          output-file: kube-linter.log          
+ 
   build:
+    needs: linters
     runs-on: ubuntu-latest
     steps:
       -
@@ -39,22 +64,6 @@ jobs:
           file: ./Dockerfile.redis
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/giropops-redis:7.2.3
-  yamllint:
-    name: yamllint
-    runs-on: ubuntu-latest
-    steps:
-      - 
-        name: Checkout do repositório
-        uses: actions/checkout@v4
-      - 
-        name: Análise de código com yamllint
-        uses: karancode/yamllint-github-action@master
-        with:
-          yamllint_file_or_dir: ${{ github.workspace }}
-          yamllint_strict: true
-          yamllint_comment: true
-        env:
-          GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     needs: build
