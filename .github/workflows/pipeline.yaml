@@ -8,8 +8,7 @@ on:
       - "feature/cicd"
 
 jobs:
-  linters:
-    name: Linting de YAML
+  linters:    
     runs-on: ubuntu-latest
     steps:
       - 
