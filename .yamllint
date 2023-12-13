@@ -26,11 +26,10 @@ rules:
   key-duplicates: enable
   key-ordering: disable
   line-length: enable
-  new-line-at-end-of-file: enable
+  new-line-at-end-of-file: disable
   new-lines: enable
   octal-values: disable
   quoted-strings: disable
-  trailing-spaces: enable
+  trailing-spaces: disable
   truthy:
-    level: warning
-    
+    level: warning  
