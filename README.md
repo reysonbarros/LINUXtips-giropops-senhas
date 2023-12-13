@@ -392,3 +392,5 @@ https://docs.github.com/en/actions/using-workflows/about-workflows#creating-depe
 https://github.com/helm/kind-action
 
 https://github.com/marketplace/actions/yamllint-github-action
+
+https://github.com/stackrox/kube-linter-action
