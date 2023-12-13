@@ -267,7 +267,7 @@ Nesse projeto, as probes e limites de recursos foram implementados no deployment
 
 Exemplo de análise com yamllint
 ```
-yamllint .
+yamllint -d .yamllint .
 ```
 ![image](https://github.com/reysonbarros/LINUXtips-giropops-senhas/assets/4474192/b42997b7-403b-42a6-b020-779f6918a5b3)
 
