@@ -19,6 +19,7 @@ jobs:
         uses: karancode/yamllint-github-action@master
         with:
           yamllint_file_or_dir: ${{ github.workspace }}
+          yamllint_config_filepath: ${{ github.workspace }}
           yamllint_strict: true
           yamllint_comment: true
         env:
