@@ -74,8 +74,7 @@ jobs:
           exit-code: '1'
           ignore-unfixed: true
           vuln-type: 'os,library'
-          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          - 
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'        
       -
         name: Trivy vulnerability scanner para giropops-redis
         uses: aquasecurity/trivy-action@master
@@ -86,7 +85,6 @@ jobs:
           ignore-unfixed: true
           vuln-type: 'os,library'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-
 
   deploy:
     needs: build
