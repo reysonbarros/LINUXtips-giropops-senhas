@@ -70,7 +70,7 @@ jobs:
         name: Trivy vulnerability scanner para giropops-senhas
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/reyson.barros/giropops-senhas:1.0'
+          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/giropops-senhas:1.0'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
@@ -80,7 +80,7 @@ jobs:
         name: Trivy vulnerability scanner para giropops-redis
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: 'docker.io/reyson.barros/giropops-redis:7.2.3'
+          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/giropops-redis:7.2.3'
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
