@@ -7,6 +7,7 @@ on:
       - "main"
       - "development"
       - "feature/cicd"
+      - "feature/ci-trivy-scan"
 
 jobs:
   linters:    
@@ -65,6 +66,26 @@ jobs:
           file: ./Dockerfile.redis
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/giropops-redis:7.2.3
+      - 
+        name: Trivy vulnerability scanner para giropops-senhas
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/giropops-senhas:1.0'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'        
+      -
+        name: Trivy vulnerability scanner para giropops-redis
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'docker.io/${{ secrets.DOCKERHUB_USERNAME }}/giropops-redis:7.2.3'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
 
   deploy:
     needs: build
