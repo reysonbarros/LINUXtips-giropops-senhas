@@ -5,6 +5,13 @@ Criar e otimizar uma aplicação Kubernetes segura e eficiente, utilizando o pro
 
 ## Pré-requisitos
 Para um correto funcionamento é preciso que as ferramentas já tenham sido instaladas
+
+- **python version 3.8+**
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get install python3.8
+
 - **docker version 24.0.6+(Client e Server)**
 ```
 apt-get update
@@ -61,7 +68,10 @@ curl -O -L "https://github.com/sigstore/cosign/releases/latest/download/cosign-l
 sudo mv cosign-linux-amd64 /usr/local/bin/cosign
 sudo chmod +x /usr/local/bin/cosign
 ```
-
+- **locust version 2.20.0+**
+```
+pip3 install locust
+```
 
 ## 1 - Preparação do projeto
 
@@ -374,6 +384,20 @@ AlertManager - http://localhost:39093
 > [!NOTE]
 > Adicionado print dos targets monitorados pelo serviceMonitor e podMonitor no Prometheus
 
+### 6 - Teste de Carga com Locust
+> [!IMPORTANT]
+> **O que é um Teste de Carga?** Teste de carga ou load testing é um tipo teste realizado para validar funcionalidades de uma aplicação baseando-se um uma quantidade de requisições simultâneas e limitadas. Dessa forma é possível analisar a performance da aplicação/sistema de acordo com a volumetria desejada do tráfego.
+
+> [!IMPORTANT]
+> **O que é o Locust?** Locust é uma ferramenta open source para teste de carga/performance
+
+Executar o teste de carga com Locust
+```
+cd load-testing
+locust
+```
+
+
 ### Referências
 https://www.josehisse.dev/blog/aumentando-disponibilidade-com-inter-pod-anti-affinity
 
@@ -394,3 +418,13 @@ https://github.com/helm/kind-action
 https://github.com/marketplace/actions/yamllint-github-action
 
 https://github.com/stackrox/kube-linter-action
+
+https://docs.locust.io/en/stable/quickstart.html
+
+https://abdelrhmanhamouda.github.io/locust-k8s-operator/how_does_it_work
+
+https://www.cybrosys.com/blog/odoo-database-load-testing-using-locust
+
+https://medium.com/whatsgooddev/como-fazer-testes-de-carga-com-python-locust-io-55ec6ae841b
+
+
