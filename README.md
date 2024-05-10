@@ -356,6 +356,7 @@ cd k8s/
 kubectl apply -f cluster-role.yaml -n dev
 kubectl apply -f giropops-senhas-servicemonitor.yaml -n dev
 kubectl apply -f giropops-senhas-podmonitor.yaml -n dev
+kubectl apply -f giropops-senhas-prometheus-rule.yaml -n dev
 ```
 
 Validar se a instalação dos serviceMonitors e podMonitors referente ao giropops-senhas foi concluída

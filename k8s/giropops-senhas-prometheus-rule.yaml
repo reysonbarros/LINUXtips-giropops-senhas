@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: nginx-prometheus-rule
+  labels:
+    prometheus: k8s # Label que indica que o PrometheusRule será utilizado pelo Prometheus do Kubernetes
+    role: alert-rules # Label que indica que o PrometheusRule contém regras de alerta
+    app.kubernetes.io/name: kube-prometheus # Label que indica que o PrometheusRule faz parte do kube-prometheus
+    app.kubernetes.io/part-of: kube-prometheus # Label que indica que o PrometheusRule faz parte do kube-prometheus
+spec:
+  groups: # Lista de grupos de regras
+  - name: nginx-prometheus-rule # Nome do grupo de regras
+    rules: # Lista de regras
+    - alert: LowReplicas
+      annotations:
+        description: 'Menos de 3 réplicas da aplicação {{ $labels.service }}  executando no cluster'
+        summary: 'Quantidade de réplicas abaixo do normal'
+        runbook: 'Ajustar a quantidade de réplicas para 3+'
+      expr: sum(up{service="giropops-senhas"}) < 3
+      labels:
+        severity: warning
