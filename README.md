@@ -7,11 +7,12 @@ Criar e otimizar uma aplicação Kubernetes segura e eficiente, utilizando o pro
 Para um correto funcionamento é preciso que as ferramentas já tenham sido instaladas
 
 - **python version 3.8+**
+```
 sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
 sudo apt-get install python3.8
-
+```
 - **docker version 24.0.6+(Client e Server)**
 ```
 apt-get update
