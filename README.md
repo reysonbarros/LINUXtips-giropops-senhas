@@ -39,6 +39,15 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 kubectl version --client
 ```
+- **K8S auto completion**
+```
+sudo apt-get install -y bash-completion
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+source ~/.bashrc
+echo 'alias k=kubectl' >>~/.bashrc
+echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
+ex: Type k - followed by pressing tab twice to see the available options and verify auto-complete is working with the alias
+```
 - **go 1.21.4+**
 ```
 sudo su
