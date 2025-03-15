@@ -39,7 +39,7 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 kubectl version --client
 ```
-- **K8S auto completion**
+- **k8s auto completion**
 ```
 sudo apt-get install -y bash-completion
 echo "source <(kubectl completion bash)" >> ~/.bashrc
